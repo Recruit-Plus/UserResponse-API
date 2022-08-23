@@ -1,14 +1,13 @@
 package com.recruitPlus.UserResponse.controller;
 
 
-import com.recruitPlus.UserResponse.model.UserResponse;
+import com.recruitPlus.UserResponse.model.*;
+//import com.recruitPlus.UserResponse.model.ResponseSubmitted;
 import com.recruitPlus.UserResponse.service.UserResponseServices;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,11 +19,21 @@ public class UserResponseController {
     @Autowired
     private UserResponseServices userResponseServices;
 
-    @GetMapping("/userresponse")
+    @GetMapping("/user/response")
     public List<UserResponse> getAllUSerResponse() {
-        List<UserResponse> userResponse = userResponseServices.getAllUSerResponse();
-        return userResponse;
+        List<UserResponse> userResponseList=userResponseServices.getAllUSerResponse();
+        return userResponseList;
 
+    }
+    @PostMapping("/user/response")
+    @ResponseStatus(code= HttpStatus.CREATED)
+    public UserResponse saveUserResponse(@RequestBody UserResponse userResponse){
+        UserResponse saveUserResponse= userResponseServices.NewUserResponse(userResponse);
+        return userResponse;
+    }
+    @PutMapping("/user/response/{response_id}")
+    public void UpdateByResponseId(@RequestBody UserResponse userResponse, @PathVariable(value = "response_id") String responseId){
+        userResponseServices.updateUserResponse(responseId,userResponse);
     }
 
 
