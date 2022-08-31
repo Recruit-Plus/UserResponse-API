@@ -27,9 +27,9 @@ public class UserResponseController {
     }
     @PostMapping("/user/response")
     @ResponseStatus(code= HttpStatus.CREATED)
-    public UserResponse saveUserResponse(@RequestBody UserResponse userResponse){
-        UserResponse saveUserResponse= userResponseServices.NewUserResponse(userResponse);
-        return userResponse;
+    public int saveUserResponse(@RequestBody UserResponse userResponse){
+        int score= userResponseServices.NewUserResponse(userResponse).getScore();
+        return score;
     }
     @PutMapping("/user/response/{response_id}")
     public void UpdateByResponseId(@RequestBody UserResponse userResponse, @PathVariable(value = "response_id") String responseId){
