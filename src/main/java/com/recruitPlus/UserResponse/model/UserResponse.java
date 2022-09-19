@@ -11,12 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 import com.recruitPlus.UserResponse.model.UserSubmissions;
 
-@Document(collection = "UserResponse")
+@Document(collection = "user_response")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 public class UserResponse {
 
     @Id
