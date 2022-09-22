@@ -60,13 +60,10 @@ public class UserResponseService {
         List<UserResponse> responses = userResponseRepo.findAll();
         List<UserResponsesDto> userData = new ArrayList<>();
         for (UserResponse resp : responses) {
-            String assessment=resp.getAssessment_id();
+            String assessment = resp.getAssessment_id();
             if (assessment.equals(assessment_id)) {
                 UserResponsesDto dto = new UserResponsesDto();
                 BeanUtils.copyProperties(resp, dto);
-                System.out.println(dto.getUser_id());
-                System.out.println(dto.getScore());
-                System.out.println(dto.getTime_taken());
                 Object user = CallQuestionToCount.getQuestionsByIdByExchangeMethod1(resp.getUser_id());
                 ObjectMapper oMapper = new ObjectMapper();
                 Map<String, Object> map = oMapper.convertValue(user, Map.class);
@@ -75,8 +72,6 @@ public class UserResponseService {
                 dto.setEmail(oMapper.convertValue(user1.get(2), String.class));
                 dto.setCollege_name(oMapper.convertValue(user1.get(3), String.class));
                 userData.add(dto);
-
-
             }
         }
         return userData;

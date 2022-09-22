@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import com.recruitPlus.UserResponse.model.UserSubmissions;
 
-@Document(collection = "user_response")
+@Document(collection = "UserResponse")
 @Data
 public class UserResponse {
 
