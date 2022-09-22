@@ -1,10 +1,9 @@
 package com.recruitPlus.UserResponse.controller;
 
 
+import com.recruitPlus.UserResponse.UserDto.UserResponsesDto;
 import com.recruitPlus.UserResponse.model.*;
-//import com.recruitPlus.UserResponse.model.ResponseSubmitted;
-import com.recruitPlus.UserResponse.service.UserResponseServices;
-import org.apache.catalina.User;
+import com.recruitPlus.UserResponse.service.UserResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,29 +11,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/responses/v1")
 public class UserResponseController {
 
     @Autowired
-    private UserResponseServices userResponseServices;
+    private UserResponseService userResponseService;
 
     @GetMapping("/user/response")
     public List<UserResponse> getAllUSerResponse() {
-        List<UserResponse> userResponseList=userResponseServices.getAllUSerResponse();
+        List<UserResponse> userResponseList=userResponseService.getAllUSerResponse();
         return userResponseList;
 
     }
+
+
+
     @PostMapping("/user/response")
     @ResponseStatus(code= HttpStatus.CREATED)
     public int saveUserResponse(@RequestBody UserResponse userResponse){
-        int score= userResponseServices.NewUserResponse(userResponse).getScore();
+        int score= userResponseService.NewUserResponse(userResponse).getScore();
         return score;
     }
+
     @PutMapping("/user/response/{response_id}")
     public void UpdateByResponseId(@RequestBody UserResponse userResponse, @PathVariable(value = "response_id") String responseId){
-        userResponseServices.updateUserResponse(responseId,userResponse);
+        userResponseService.updateUserResponse(responseId,userResponse);
     }
+
+    @GetMapping("/responses/{assessment_id}")
+    public List<UserResponsesDto> getResponsesByAssessmentId(@PathVariable String assessment_id){
+        return userResponseService.getResponsesByAssessmentId(assessment_id);
+
+    }
+
 
 
 
