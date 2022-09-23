@@ -9,28 +9,34 @@ import java.util.List;
 public class CallQuestionToCount {
     static RestTemplate restTemplate = new RestTemplate();
     static String baseUrl = "http://localhost:8081/questions/v1/";
+    static String baseUrl1="http://localhost:8084/users/v1/";
 
-    private static Object getQuestionsByIdByExchangeMethod(HttpEntity<Object> requestEntity, String questionId) {
-        ResponseEntity<Object> responseEntity = restTemplate.exchange(baseUrl + "question/"+questionId ,
-                HttpMethod.GET,
-                requestEntity,
-                Object.class);
-        Object questions = responseEntity.getBody();
-        //System.out.println(question.size());
-//        for(Object a:questions){
-//            System.out.println(a);
-//        }
-        return questions;
-    }
-
-    static Object useExchangeMethodsOfRestTemplate(String questionId) {
+    static Object getQuestionsByIdByExchangeMethod(String questionId) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
-
-        return getQuestionsByIdByExchangeMethod(requestEntity,questionId);
-
+        ResponseEntity<Object> responseEntity = restTemplate.exchange(baseUrl + "question/"+questionId ,
+                HttpMethod.GET,
+                requestEntity,
+                Object.class);
+        Object questions = responseEntity.getBody();
+        return questions;
     }
+    static Object getQuestionsByIdByExchangeMethod1(String user_id) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<Object> responseEntity = restTemplate.exchange(baseUrl1 + "users/"+user_id ,
+                HttpMethod.GET,
+                requestEntity,
+                Object.class);
+        Object user= responseEntity.getBody();
+        return user;
+    }
+
+
 }

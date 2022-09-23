@@ -13,10 +13,6 @@ import com.recruitPlus.UserResponse.model.UserSubmissions;
 
 @Document(collection = "UserResponse")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 public class UserResponse {
 
     @Id
